@@ -3,10 +3,10 @@ import 'dart:math';
 
 class Tema {
   String nombre;
-  int cantidadEstudiantes;
+  int cantEstudiantes;
   List<String> estudiantesAsignados = [];
 
-  Tema(this.nombre, this.cantidadEstudiantes);
+  Tema(this.nombre, this.cantEstudiantes);
 }
 
 List<Tema> temas = [];
@@ -41,7 +41,7 @@ void main() {
 }
 
 void mostrarMenuPrincipal() {
-  print('\nMENU PRINCIPAL');
+  print('\nMENú PRINCIPAL');
   print('1. Gestión de temas de exposición');
   print('2. Gestión de estudiantes');
   print('3. Asignar estudiantes aleatoriamente');
@@ -104,7 +104,7 @@ void editarTema() {
     int nuevaCantidad =
         leerEnteroUsuario("Ingrese la nueva cantidad de estudiantes: ");
     temas[indice].nombre = nuevoNombre;
-    temas[indice].cantidadEstudiantes = nuevaCantidad;
+    temas[indice].cantEstudiantes = nuevaCantidad;
     print("Tema editado correctamente");
   } else {
     print("Índice inválido");
@@ -118,7 +118,7 @@ void mostrarTemas() {
     print('Lista de temas:');
     for (int i = 0; i < temas.length; i++) {
       print(
-          '${i + 1}. ${temas[i].nombre} (${temas[i].cantidadEstudiantes} estudiantes)');
+          '${i + 1}. ${temas[i].nombre} (${temas[i].cantEstudiantes} estudiantes)');
     }
   }
 }
@@ -238,7 +238,7 @@ void asignarEstudiantesAleatoriamente() {
 
   for (var tema in temas) {
     int cantidadAsignar =
-        min(tema.cantidadEstudiantes, estudiantesSinAsignar.length);
+        min(tema.cantEstudiantes, estudiantesSinAsignar.length);
     for (int i = 0; i < cantidadAsignar; i++) {
       if (estudiantesSinAsignar.isNotEmpty) {
         int indiceAleatorio = random.nextInt(estudiantesSinAsignar.length);
