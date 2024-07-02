@@ -3,20 +3,20 @@ import 'dart:math';
 
 class Tema {
   String nombre;
-  int cantEstudiantes;
+  int numEstudiantes;
   List<String> estudiantesAsignados = [];
 
-  Tema(this.nombre, this.cantEstudiantes);
+  Tema(this.nombre, this.numEstudiantes);
 }
 
-List<Tema> temas = [];
-List<String> estudiantes = [];
+List<Tema> listaTemas = [];
+List<String> listaEstudiantes = [];
 
 void main() {
   int opcion;
   do {
-    mostrarMenuPrincipal();
-    opcion = leerEnteroUsuario("Ingrese la opción deseada: ");
+    mostrarMenu();
+    opcion = leerEntero("Seleccione una opción: ");
 
     switch (opcion) {
       case 1:
@@ -26,56 +26,56 @@ void main() {
         gestionarEstudiantes();
         break;
       case 3:
-        asignarEstudiantesAleatoriamente();
+        asignarEstudiantes();
         break;
       case 4:
-        precargarDatosPrueba();
+        cargarDatosPrueba();
         break;
       case 5:
-        print('Saliendo del programa...');
+        print('Cerrando el programa...');
         break;
       default:
-        print('Opción inválida');
+        print('Opción no válida');
     }
   } while (opcion != 5);
 }
 
-void mostrarMenuPrincipal() {
-  print('\nMENú PRINCIPAL');
-  print('1. Gestión de temas de exposición');
+void mostrarMenu() {
+  print('\nMENU PRINCIPAL');
+  print('1. Gestión de temas');
   print('2. Gestión de estudiantes');
-  print('3. Asignar estudiantes aleatoriamente');
-  print('4. Precargar datos de prueba');
+  print('3. Asignar estudiantes al azar');
+  print('4. Cargar datos de prueba');
   print('5. Salir');
 }
 
 void gestionarTemas() {
   int opcion;
   do {
-    print("\n----- Gestión de Temas de Exposición -----");
-    print("1. Crear tema");
-    print("2. Editar tema");
-    print("3. Mostrar temas");
-    print("4. Eliminar tema");
-    print("5. Volver al menú principal");
+    print("\n--- Gestión de Temas ---");
+    print("1. Crear nuevo tema");
+    print("2. Modificar tema");
+    print("3. Ver temas");
+    print("4. Borrar tema");
+    print("5. Regresar al menú principal");
 
-    opcion = leerEnteroUsuario("Ingrese la opción deseada: ");
+    opcion = leerEntero("Elija una opción: ");
 
     switch (opcion) {
       case 1:
-        crearTema();
+        crearNuevoTema();
         break;
       case 2:
-        editarTema();
+        modificarTema();
         break;
       case 3:
-        mostrarTemas();
+        verTemas();
         break;
       case 4:
-        eliminarTema();
+        borrarTema();
         break;
       case 5:
-        print("Volviendo al menú principal");
+        print("Regresando al menú principal...");
         break;
       default:
         print("Opción incorrecta");
@@ -83,54 +83,47 @@ void gestionarTemas() {
   } while (opcion != 5);
 }
 
-void crearTema() {
-  String nombre =
-      leerEntradaUsuario("Ingrese el nombre del tema de exposición: ");
-  int cantidad =
-      leerEnteroUsuario("Ingrese la cantidad de estudiantes para este tema: ");
-  temas.add(Tema(nombre, cantidad));
-  print("Tema creado correctamente");
+void crearNuevoTema() {
+  String nombre = leerCadena("Introduzca el nombre del tema: ");
+  int cantidad = leerEntero("Introduzca la cantidad de estudiantes para este tema: ");
+  listaTemas.add(Tema(nombre, cantidad));
+  print("Tema creado exitosamente");
 }
 
-void editarTema() {
-  mostrarTemas();
-  if (temas.isEmpty) return;
+void modificarTema() {
+  verTemas();
+  if (listaTemas.isEmpty) return;
 
-  int indice =
-      leerEnteroUsuario("Ingrese el número del tema que desea editar: ") - 1;
-  if (indice >= 0 && indice < temas.length) {
-    String nuevoNombre =
-        leerEntradaUsuario("Ingrese el nuevo nombre del tema: ");
-    int nuevaCantidad =
-        leerEnteroUsuario("Ingrese la nueva cantidad de estudiantes: ");
-    temas[indice].nombre = nuevoNombre;
-    temas[indice].cantEstudiantes = nuevaCantidad;
-    print("Tema editado correctamente");
+  int indice = leerEntero("Seleccione el número del tema a modificar: ") - 1;
+  if (indice >= 0 && indice < listaTemas.length) {
+    String nuevoNombre = leerCadena("Introduzca el nuevo nombre del tema: ");
+    int nuevaCantidad = leerEntero("Introduzca la nueva cantidad de estudiantes: ");
+    listaTemas[indice].nombre = nuevoNombre;
+    listaTemas[indice].numEstudiantes = nuevaCantidad;
+    print("Tema modificado correctamente");
   } else {
     print("Índice inválido");
   }
 }
 
-void mostrarTemas() {
-  if (temas.isEmpty) {
-    print('No hay temas para mostrar.');
+void verTemas() {
+  if (listaTemas.isEmpty) {
+    print('No hay temas disponibles.');
   } else {
     print('Lista de temas:');
-    for (int i = 0; i < temas.length; i++) {
-      print(
-          '${i + 1}. ${temas[i].nombre} (${temas[i].cantEstudiantes} estudiantes)');
+    for (int i = 0; i < listaTemas.length; i++) {
+      print('${i + 1}. ${listaTemas[i].nombre} (${listaTemas[i].numEstudiantes} estudiantes)');
     }
   }
 }
 
-void eliminarTema() {
-  mostrarTemas();
-  if (temas.isEmpty) return;
+void borrarTema() {
+  verTemas();
+  if (listaTemas.isEmpty) return;
 
-  int indice =
-      leerEnteroUsuario("Ingrese el número del tema que desea eliminar: ") - 1;
-  if (indice >= 0 && indice < temas.length) {
-    temas.removeAt(indice);
+  int indice = leerEntero("Seleccione el número del tema a borrar: ") - 1;
+  if (indice >= 0 && indice < listaTemas.length) {
+    listaTemas.removeAt(indice);
     print("Tema eliminado correctamente");
   } else {
     print("Índice inválido");
@@ -140,30 +133,30 @@ void eliminarTema() {
 void gestionarEstudiantes() {
   int opcion;
   do {
-    print("\n----- Gestión de Estudiantes -----");
-    print("1. Agregar estudiante");
-    print("2. Editar estudiante");
-    print("3. Mostrar estudiantes");
-    print("4. Eliminar estudiante");
-    print("5. Volver al menú principal");
+    print("\n--- Gestión de Estudiantes ---");
+    print("1. Añadir estudiante");
+    print("2. Modificar estudiante");
+    print("3. Ver estudiantes");
+    print("4. Borrar estudiante");
+    print("5. Regresar al menú principal");
 
-    opcion = leerEnteroUsuario("Ingrese la opción deseada: ");
+    opcion = leerEntero("Elija una opción: ");
 
     switch (opcion) {
       case 1:
-        agregarEstudiante();
+        anadirEstudiante();
         break;
       case 2:
-        editarEstudiante();
+        modificarEstudiante();
         break;
       case 3:
-        mostrarEstudiantes();
+        verEstudiantes();
         break;
       case 4:
-        eliminarEstudiante();
+        borrarEstudiante();
         break;
       case 5:
-        print("Volviendo al menú principal");
+        print("Regresando al menú principal...");
         break;
       default:
         print("Opción incorrecta");
@@ -171,74 +164,65 @@ void gestionarEstudiantes() {
   } while (opcion != 5);
 }
 
-void agregarEstudiante() {
-  String nombre =
-      leerEntradaUsuario("Ingrese el nombre completo del estudiante: ");
-  estudiantes.add(nombre);
-  print("Estudiante agregado correctamente");
+void anadirEstudiante() {
+  String nombre = leerCadena("Introduzca el nombre completo del estudiante: ");
+  listaEstudiantes.add(nombre);
+  print("Estudiante añadido correctamente");
 }
 
-void editarEstudiante() {
-  mostrarEstudiantes();
-  if (estudiantes.isEmpty) return;
+void modificarEstudiante() {
+  verEstudiantes();
+  if (listaEstudiantes.isEmpty) return;
 
-  int indice =
-      leerEnteroUsuario("Ingrese el número del estudiante que desea editar: ") -
-          1;
-  if (indice >= 0 && indice < estudiantes.length) {
-    String nuevoNombre =
-        leerEntradaUsuario("Ingrese el nuevo nombre completo del estudiante: ");
-    estudiantes[indice] = nuevoNombre;
-    print("Estudiante editado correctamente");
+  int indice = leerEntero("Seleccione el número del estudiante a modificar: ") - 1;
+  if (indice >= 0 && indice < listaEstudiantes.length) {
+    String nuevoNombre = leerCadena("Introduzca el nuevo nombre completo del estudiante: ");
+    listaEstudiantes[indice] = nuevoNombre;
+    print("Estudiante modificado correctamente");
   } else {
     print("Índice inválido");
   }
 }
 
-void mostrarEstudiantes() {
-  if (estudiantes.isEmpty) {
-    print('No hay estudiantes para mostrar.');
+void verEstudiantes() {
+  if (listaEstudiantes.isEmpty) {
+    print('No hay estudiantes disponibles.');
   } else {
     print('Lista de estudiantes:');
-    for (int i = 0; i < estudiantes.length; i++) {
-      print('${i + 1}. ${estudiantes[i]}');
+    for (int i = 0; i < listaEstudiantes.length; i++) {
+      print('${i + 1}. ${listaEstudiantes[i]}');
     }
   }
 }
 
-void eliminarEstudiante() {
-  mostrarEstudiantes();
-  if (estudiantes.isEmpty) return;
+void borrarEstudiante() {
+  verEstudiantes();
+  if (listaEstudiantes.isEmpty) return;
 
-  int indice = leerEnteroUsuario(
-          "Ingrese el número del estudiante que desea eliminar: ") -
-      1;
-  if (indice >= 0 && indice < estudiantes.length) {
-    estudiantes.removeAt(indice);
+  int indice = leerEntero("Seleccione el número del estudiante a borrar: ") - 1;
+  if (indice >= 0 && indice < listaEstudiantes.length) {
+    listaEstudiantes.removeAt(indice);
     print("Estudiante eliminado correctamente");
   } else {
     print("Índice inválido");
   }
 }
 
-void asignarEstudiantesAleatoriamente() {
-  if (temas.isEmpty || estudiantes.isEmpty) {
-    print(
-        "No hay suficientes temas o estudiantes para realizar la asignación.");
+void asignarEstudiantes() {
+  if (listaTemas.isEmpty || listaEstudiantes.isEmpty) {
+    print("No hay suficientes temas o estudiantes para realizar la asignación.");
     return;
   }
 
-  // Resetear asignaciones previas
-  for (var tema in temas) {
+  for (var tema in listaTemas) {
     tema.estudiantesAsignados.clear();
   }
 
-  List<String> estudiantesSinAsignar = List.from(estudiantes);
+  List<String> estudiantesSinAsignar = List.from(listaEstudiantes);
   Random random = Random();
 
-  for (var tema in temas) {
-    int cantidadAsignar =
-        min(tema.cantEstudiantes, estudiantesSinAsignar.length);
+  for (var tema in listaTemas) {
+    int cantidadAsignar = min(tema.numEstudiantes, estudiantesSinAsignar.length);
     for (int i = 0; i < cantidadAsignar; i++) {
       if (estudiantesSinAsignar.isNotEmpty) {
         int indiceAleatorio = random.nextInt(estudiantesSinAsignar.length);
@@ -248,9 +232,8 @@ void asignarEstudiantesAleatoriamente() {
     }
   }
 
-  // Mostrar resultados
   print("\nAsignación de estudiantes a temas:");
-  for (var tema in temas) {
+  for (var tema in listaTemas) {
     print("${tema.nombre}:");
     for (var estudiante in tema.estudiantesAsignados) {
       print("  - $estudiante");
@@ -265,20 +248,19 @@ void asignarEstudiantesAleatoriamente() {
   }
 }
 
-void precargarDatosPrueba() {
-  temas = [
-    Tema("que es POO?", 3),
-    Tema("difrencia entre POO y PE", 3),
-    Tema("objeto, clase y cual es la diferencia ", 3),
-    Tema("que es abstraccion?", 3),
-    Tema("que es encapsulacion?", 3),
-    Tema("que es la herencia?", 4),
-    Tema("que es polimorfismo y de un ejemplo", 4),
-    Tema("principales diagramas de UML", 4),
-    Tema("que es la herencia?", 4),
+void cargarDatosPrueba() {
+  listaTemas = [
+    Tema("¿Qué es POO?", 3),
+    Tema("Diferencias entre POO y PE", 3),
+    Tema("Objetos y clases, ¿cuál es la diferencia?", 3),
+    Tema("¿Qué es la abstracción?", 3),
+    Tema("¿Qué es la encapsulación?", 3),
+    Tema("¿Qué es la herencia?", 4),
+    Tema("¿Qué es el polimorfismo? Ejemplos", 4),
+    Tema("Principales diagramas de UML", 4),
   ];
 
-  estudiantes = [
+  listaEstudiantes = [
     "ANDRES FELIPE SANCHEZ HURTADO",
     "ANGIE DAHIANA RIOS QUINTERO",
     "CRISTIAN ALVAREZ ARANZAZU",
@@ -308,20 +290,20 @@ void precargarDatosPrueba() {
     "ALEJANDRO VALLEJO ESCOBAR",
   ];
 
-  print("Datos de prueba precargados correctamente.");
+  print("Datos de prueba cargados correctamente.");
 }
 
-String leerEntradaUsuario(String mensaje) {
+String leerCadena(String mensaje) {
   print(mensaje);
   String? input = stdin.readLineSync();
   while (input == null || input.isEmpty) {
-    print("Por favor, ingrese un valor válido.");
+    print("Entrada no válida. Inténtelo de nuevo.");
     input = stdin.readLineSync();
   }
   return input;
 }
 
-int leerEnteroUsuario(String mensaje) {
+int leerEntero(String mensaje) {
   while (true) {
     print(mensaje);
     try {
@@ -330,7 +312,7 @@ int leerEnteroUsuario(String mensaje) {
         return int.parse(input);
       }
     } catch (e) {
-      print("Por favor, ingrese un número válido.");
+      print("Entrada no válida. Ingrese un número entero.");
     }
   }
 }
